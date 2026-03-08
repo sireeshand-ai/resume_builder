@@ -22,16 +22,41 @@ db.run(`CREATE TABLE IF NOT EXISTS resumes (
 
 
 // ---------------------- CREATE ----------------------
+
 app.post("/resume", (req, res) => {
-  const data = JSON.stringify(req.body); // save everything
-  const slug = req.body.name || "Untitled Resume";
-  const html_snapshot = req.body.html_snapshot || "";
+
+  const data = req.body;
+
+  const requiredFields = [
+    "name","email","objective","projects","skills","experience","strengths",
+    "fatherName","dob","age","sex","marital","phone","languages",
+    "hobbies","nationality","address","declaration","date","signature","template"
+  ];
+
+  // Check required fields
+  for (let field of requiredFields) {
+    if (!data[field] || data[field].toString().trim() === "") {
+      return res.status(400).json({
+        error: `${field} is required`
+      });
+    }
+  }
+
+  // Check education
+  if (!data.education || !Array.isArray(data.education) || data.education.length === 0) {
+    return res.status(400).json({ error: "At least one education entry is required" });
+  }
+
+  const jsonData = JSON.stringify(data);
+  const slug = data.name || "Untitled Resume";
+  const html_snapshot = data.html_snapshot || "";
 
   db.run(
     `INSERT INTO resumes (slug, data, html_snapshot) VALUES (?, ?, ?)`,
-    [slug, data, html_snapshot],
+    [slug, jsonData, html_snapshot],
     function (err) {
       if (err) return res.status(500).json({ error: err.message });
+
       res.json({ id: this.lastID });
     }
   );
