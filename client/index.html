@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">                                
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px;
+      color: #333;
+    }
+    .container {
+      display: flex;
+      gap: 30px;
+      max-width: 1200px;
+      width: 100%;
+    }
+    .form-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      backdrop-filter: blur(8px);
+      
+    }
+    .form-card h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+    input, textarea, select {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #2575fc;
+      box-shadow: 0 0 6px rgba(37, 117, 252, 0.4);
+    }
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #2575fc;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      margin-right: 10px;
+      transition: 0.3s;
+    }
+    button:hover { background: #1a5ed8; }
+
+    .preview-card {
+  flex: 1;
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  /* remove max-height and overflow-y */
+}
+
+    .preview-card h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+    }
+
+/* Template1: Sidebar with photo */
+.template1 {
+  font-family: 'Segoe UI', sans-serif;
+  background: #fff;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.template1 .left {
+  background: #0078d7;
+  color: #fff;
+  padding: 20px;
+}
+.template1 .left h2 { font-size: 24px; margin: 0 0 10px; }
+.template1 .left p { margin: 5px 0; }
+.template1 .right {
+  padding: 30px;
+}
+.template1 h3 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 20px; color: #333; }
+.template1 p { margin: 5px 0; }
+
+
+/* Template2: Top banner with photo */
+.template2 { font-family: 'Segoe UI', sans-serif; background: #fff; padding: 25px; border-radius: 10px; } .template2 .header { display: flex; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; } .template2 img { width: 100px; height: 100px; border-radius: 50%; margin-right: 20px; object-fit: cover; }
+/* Template3: Two-column with photo in header */
+.template3 {
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.template3 .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.template3 .header div h2 {
+  font-size: 24px;
+  color: #222;
+  margin: 0;
+}
+
+.template3 .header div p {
+  color: #555;
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+.template3 img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2575fc;
+}
+
+.template3 .content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+.template3 p b {
+  display: block;
+  color: #2575fc;
+  font-size: 17px;
+  margin-top: 10px;
+}
+
+.template3 h3 {
+  color: #2575fc;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+/* Template4: Modern clean with photo top-right */
+.template4 {
+  font-family: 'Segoe UI', sans-serif;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+
+.template4 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 25px;
+}
+
+.template4 h2 {
+  font-size: 24px;
+  color: #222;
+  margin: 0;
+}
+
+.template4 p {
+  color: #555;
+  margin: 3px 0;
+}
+
+.template4 img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2575fc;
+}
+
+.template4 h3 {
+  color: #2575fc;
+  font-size: 18px;
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+
+
+
+    /* Main Buttons */
+button {
+  padding: 8px 14px;
+  margin: 5px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Special buttons */
+.btn-main {
+  background: #2575fc;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-open {
+  background: #4CAF50;
+  color: white;
+}
+
+.btn-delete {
+  background: #e74c3c;
+  color: white;
+}
+
+/* Resume List */
+#savedResumes {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+}
+
+#savedResumes h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.resume-item {
+  margin: 12px 0;
+  padding: 10px;
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Form Section -->
+    <div class="form-card">
+      <h1>Resume Builder</h1>
+      <form id="resumeForm">
+        <!-- Order: Name, Email, Objective, Education, Skills, Experience, Strengths, Personal Info, References, Declaration, Date/Signature -->
+        <label>Name:</label>
+        <input type="text" id="name"  placeholder="Enter your name">
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="Enter your email" required />
+
+        <label>Objective:</label>
+        <textarea id="objective" placeholder="Career Objective"></textarea>
+
+        <!-- Education -->
+        <div id="education-section">
+          <label>Education:</label>
+          <div class="edu-entry">
+            <input type="text" class="course" placeholder="Course / Degree" required />
+            <input type="text" class="institution" placeholder="Institution / School" required />
+            <input type="text" class="time" placeholder="Time Period (2018 - 2022)" />
+            <input type="text" class="percentage" placeholder="Percentage / CGPA" />
+          </div>
+        </div>
+        <button type="button" onclick="addEducation()">+ Add More Education</button>
+        <label>Projects:</label>
+<textarea id="projects" placeholder="Your projects"></textarea>
+
+        <label>Skills:</label>
+        <textarea id="skills" placeholder="Your skills"></textarea>
+
+        <label>Experience:</label>
+        <textarea id="experience" placeholder="Your work experience"></textarea>
+
+        <label>Strengths:</label>
+        <textarea id="strengths" placeholder="Your strengths"></textarea>
+
+        <!-- Personal Information -->
+        <h3>Personal Information</h3>
+        <label>Father's Name:</label>
+        <input type="text" id="fatherName" placeholder="Enter father's name" />
+
+        <label>Date of Birth:</label>
+        <input type="text" id="dob" placeholder="DD/MM/YYYY" />
+
+        <label>Age:</label>
+        <input type="text" id="age" placeholder="Your age" />
+
+        <label>Sex:</label>
+        <input type="text" id="sex" placeholder="Male / Female / Other" />
+
+        <label>Marital Status:</label>
+        <input type="text" id="marital" placeholder="Single / Married / Other" />
+
+        <label>Phone Number:</label>
+        <input type="text" id="phone" placeholder="Your phone number" />
+
+        <label>Languages Known:</label>
+        <textarea id="languages" placeholder="Languages you know"></textarea>
+        <label>Hobbies:</label>
+<textarea id="hobbies" placeholder="Your hobbies"></textarea>
+
+
+        <label>Nationality:</label>
+        <input type="text" id="nationality" placeholder="Your nationality" />
+
+        <label>Address:</label>
+        <textarea id="address" placeholder="Your address"></textarea>
+
+        <label>Reference Numbers:</label>
+        <textarea id="references" placeholder="Reference contacts"></textarea>
+
+        <label>Declaration:</label>
+        <textarea id="declaration" placeholder="Declaration statement"></textarea>
+
+        <label>Date:</label>
+        <input type="text" id="date" placeholder="DD/MM/YYYY" />
+
+        <label>Signature:</label>
+        <input type="text" id="signature" placeholder="Your name as signature" />
+
+        <!-- Photo input (hidden unless template 4 or 5) -->
+        <div id="photoField" style="display:none;">
+          <label>Photo:</label>
+          <input type="file" id="photo" accept="image/*" />
+        </div>
+
+        <label>Select Template:</label>
+        <select id="template">
+          <option value="template1" selected>Modern</option>
+          <option value="template2">Minimal</option>
+          <option value="template3">Classic</option>
+          <option value="template4">professional</option>
+          
+        </select>
+        <div style="margin-top:20px; display:flex; justify-content:center; gap:15px;">
+  <button type="button" onclick="saveResume()">💾 Save Resume</button>
+  <button type="button" onclick="downloadResume()">⬇️ Download Resume</button>
+  <button onclick="loadResumes()" class="btn-main">📂 Load Saved Resumes</button>
+
+
+
+
+</div>
+<div id="savedResumes" style="margin-top:20px;"></div>
+
+
+      </form>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="preview-card">
+      <h2>Live Preview</h2>
+      <div class="resume-preview" id="preview"></div>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("resumeForm");
+    const preview = document.getElementById("preview");
+    const photoField = document.getElementById("photoField");
+    const photoInput = document.getElementById("photo");
+    const templateSelect = document.getElementById("template");
+    let photoURL = "";
+
+    // Photo handler for templates 4 & 5
+    photoInput?.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        photoURL = URL.createObjectURL(file);
+        renderResume(getFormData());
+      }
+    });
+
+    function getEducationData() {
+      const entries = document.querySelectorAll(".edu-entry");
+      const list = Array.from(entries).map(entry => ({
+        course: entry.querySelector(".course").value.trim(),
+        institution: entry.querySelector(".institution").value.trim(),
+        time: entry.querySelector(".time").value.trim(),
+        percentage: entry.querySelector(".percentage").value.trim(),
+      })).filter(e => e.course || e.institution || e.time || e.percentage);
+
+      // Default John Doe education if user hasn't entered anything
+      if (!list.length) {
+        return [
+          { course: "B.Tech in Computer Science", institution: "ABC University", time: "2018 - 2022", percentage: "8.5 CGPA" },
+          { course: "Intermediate (MPC)", institution: "XYZ Junior College", time: "2016 - 2018", percentage: "92%" }
+        ];
+      }
+      return list;
+    }
+
+    function getFormData() {
+      return {
+        // Defaults ensure John Doe shows in ALL templates until overridden
+        name: document.getElementById("name").value || "John Doe",
+        email: document.getElementById("email").value || "john.doe@example.com",
+        objective: document.getElementById("objective").value || "To work in a challenging environment and enhance my skills.",
+        education: getEducationData(),
+        projects: document.getElementById("projects").value || "Portfolio Website, Chat Application",
+        skills: document.getElementById("skills").value || "Java, Python, SQL",
+        experience: document.getElementById("experience").value || "No prior experience.",
+        strengths: document.getElementById("strengths").value || "Hardworking, Team Player, Quick Learner",
+
+        fatherName: document.getElementById("fatherName").value || "Mr. Richard Doe",
+        dob: document.getElementById("dob").value || "01/01/2000",
+        age: document.getElementById("age").value || "25",
+        sex: document.getElementById("sex").value || "Male",
+        marital: document.getElementById("marital").value || "Single",
+        phone: document.getElementById("phone").value || "+91 9876543210",
+        languages: document.getElementById("languages").value || "English, Hindi",
+        hobbies: document.getElementById("hobbies").value || "Reading, Drawing, Playing Chess",
+        nationality: document.getElementById("nationality").value || "Indian",
+        address: document.getElementById("address").value || "123 Main Street, Hyderabad, Telangana",
+
+        references: document.getElementById("references").value || "Mr. ABC (99999 99999), Ms. XYZ (88888 88888)",
+        declaration: document.getElementById("declaration").value || "I hereby declare that the above information is true to the best of my knowledge.",
+        date: document.getElementById("date").value || "20/08/2025",
+        signature: document.getElementById("signature").value || "John Doe",
+
+        template: document.getElementById("template").value
+      };
+    }
+
+    function renderEducation(education) {
+      return education.map(e => {
+        let details = `<p>${e.course}`;
+        if (e.institution) details += ` | ${e.institution}`;
+        if (e.time) details += ` | ${e.time}`;
+        if (e.percentage) details += ` | ${e.percentage}`;
+        details += `</p>`;
+        return details;
+      }).join("");
+    }
+
+    function renderCommon(data) {
+      return `
+        <h3>Objective</h3><p>${data.objective}</p>
+        <h3>Education</h3>${renderEducation(data.education)}
+        <h3>Projects</h3><p>${data.projects}</p>
+
+        <h3>Skills</h3><p>${data.skills}</p>
+        <h3>Experience</h3><p>${data.experience}</p>
+        <h3>Strengths</h3><p>${data.strengths}</p>
+
+        <h3>Personal Information</h3>
+        <p><b>Father's Name:</b> ${data.fatherName}</p>
+        <p><b>Date of Birth:</b> ${data.dob}</p>
+        <p><b>Age:</b> ${data.age}</p>
+        <p><b>Sex:</b> ${data.sex}</p>
+        <p><b>Marital Status:</b> ${data.marital}</p>
+        <p><b>Phone Number:</b> ${data.phone}</p>
+        <p><b>Languages Known:</b> ${data.languages}</p>
+        <p><b>Hobbies:</b> ${data.hobbies}</p>
+
+        <p><b>Nationality:</b> ${data.nationality}</p>
+        <p><b>Address:</b> ${data.address}</p>
+
+        <h3>Reference Numbers</h3><p>${data.references}</p>
+        <h3>Declaration</h3><p>${data.declaration}</p>
+
+        <div class="bottom-row">
+          <p><b>Date:</b> ${data.date}</p>
+          <p><b>Signature:</b> ${data.signature}</p>
+        </div>
+      `;
+    }
+
+    function renderResume(data) {
+  const safe = (val, fallback) => val && val.trim() !== "" ? val : fallback;
+
+  // prepare common data with fallbacks
+  const filled = {
+    ...data,
+    name: safe(data.name, "John Doe"),
+    email: safe(data.email, "john.doe@example.com"),
+    objective: safe(data.objective, "To work in a challenging environment and enhance my skills."),
+    projects: safe(data.projects, "Portfolio Website, Chat Application"),
+    skills: safe(data.skills, "Java, Python, SQL"),
+    experience: safe(data.experience, "No prior experience."),
+    strengths: safe(data.strengths, "Hardworking, Team Player, Quick Learner"),
+    fatherName: safe(data.fatherName, "Mr. Richard Doe"),
+    dob: safe(data.dob, "01/01/2000"),
+    age: safe(data.age, "25"),
+    sex: safe(data.sex, "Male"),
+    marital: safe(data.marital, "Single"),
+    phone: safe(data.phone, "+91 9876543210"),
+    languages: safe(data.languages, "English, Hindi"),
+    hobbies: safe(data.hobbies, "Reading, Drawing, Playing Chess"),
+    nationality: safe(data.nationality, "Indian"),
+    address: safe(data.address, "123 Main Street, Hyderabad, Telangana"),
+    references: safe(data.references, "Mr. ABC (99999 99999), Ms. XYZ (88888 88888)"),
+    declaration: safe(data.declaration, "I hereby declare that the above information is true to the best of my knowledge."),
+    date: safe(data.date, "20/08/2025"),
+    signature: safe(data.signature, "John Doe")
+  };
+
+  let html = "";
+if (data.template === "template1") {
+  html = `
+
+    <div class="template1">
+      <div class="left">
+        <h2>${filled.name}</h2>
+        <p>${filled.email}</p>
+        <p>${filled.phone}</p>
+        <p>${filled.address}</p>
+        <h3>Skills</h3><p>${filled.skills}</p>
+        
+        <h3>Languages</h3><p>${filled.languages}</p>
+        <h3>Strengths</h3><p>${filled.strengths}</p>
+        <h3>Hobbies</h3><p>${filled.hobbies}</p>
+        <h3>Date</h3><p>${filled.date}</p>
+        <h3>References</h3>
+<p>${filled.references}</p>
+        
+      </div>
+      <div class="right">
+        <h3>Objective</h3><p>${filled.objective}</p>
+        <h3>Education</h3>${renderEducation(filled.education)}
+        <h3>Projects</h3><p>${filled.projects}</p>
+        <h3>Experience</h3><p>${filled.experience}</p>
+        
+        <p><b>Father's Name:</b> ${data.fatherName}</p>
+        <p><b>Date of Birth:</b> ${data.dob}</p>
+        <p><b>Age:</b> ${data.age}</p>
+        <p><b>Sex:</b> ${data.sex}</p>
+        <p><b>Marital Status:</b> ${data.marital}</p>
+        <p><b>Nationality:</b> ${data.nationality}</p>
+        <h3>Declaration</h3><p>${filled.declaration}</p>
+        <h3>Signature</h3><p>${filled.signature}</p>
+
+      </div>
+    </div>
+  `;
+
+// Template2
+} else if (data.template === "template2") {
+  html = `
+    <div class="template2">
+      <div class="header">
+        ${photoURL ? `<img src="${photoURL}" alt="Profile Photo"/>` : ``}
+        <div>
+          <h2>${filled.name}</h2>
+        <p>${filled.email}</p>
+        <p>${filled.phone}</p>
+        <p>${filled.address}</p>
+        <h3>Objective</h3><p>${filled.objective}</p>
+        <h3>Education</h3>${renderEducation(filled.education)}
+        <h3>Projects</h3><p>${filled.projects}</p>
+        <h3>Skills</h3><p>${filled.skills}</p>
+        <h3>Experience</h3><p>${filled.experience}</p>
+        <h3>Strengths</h3><p>${filled.strengths}</p>
+        
+        
+    
+        </div>
+      </div>
+        
+        
+        <h3>Hobbies</h3><p>${filled.hobbies}</p>
+        <p><b>Father's Name:</b> ${data.fatherName}</p>
+        <p><b>Date of Birth:</b> ${data.dob}</p>
+        <p><b>Age:</b> ${data.age}</p>
+        <p><b>Sex:</b> ${data.sex}</p>
+        <p><b>Marital Status:</b> ${data.marital}</p>
+        
+        <p><b>Languages Known:</b> ${data.languages}</p>
+        
+
+        <p><b>Nationality:</b> ${data.nationality}</p>
+        <h3>References</h3>
+<p>${filled.references}</p>
+
+        <h3>Declaration</h3><p>${filled.declaration}</p>
+        <h3>Date</h3><p>${filled.date}</p>
+        <h3>Signature</h3><p>${filled.signature}</p>
+    </div>
+  `;
+
+// Template3
+} else if (data.template === "template3") {
+  html = `
+    <div class="template3">
+      <div class="header">
+        <div>
+          <h2>${filled.name}</h2>
+          <p>${filled.email} | ${filled.phone}</p>
+        </div>
+        ${photoURL ? `<img src="${photoURL}" alt="Profile Photo"/>` : ``}
+      </div>
+      <div class="content">
+        <div>
+           <h3>Objective</h3><p>${filled.objective}</p>
+          
+        <h3>Address</h3><p>${filled.address}</p>
+        
+        <h3>Languages</h3><p>${filled.languages}</p>
+        <h3>Hobbies</h3><p>${filled.hobbies}</p>
+        <p><b>Father's Name:</b> ${data.fatherName}</p>
+        <p><b>Date of Birth:</b> ${data.dob}</p>
+        <p><b>Age:</b> ${data.age}</p>
+        <p><b>Sex:</b> ${data.sex}</p>
+        <p><b>Marital Status:</b> ${data.marital}</p>
+         <p><b>Nationality:</b> ${data.nationality}</p>
+        <h3>Date</h3><p>${filled.date}</p>
+        </div>
+        <div>
+    
+        <h3>Education</h3>${renderEducation(filled.education)}
+        <h3>Projects</h3><p>${filled.projects}</p>
+        <h3>Experience</h3><p>${filled.experience}</p>
+        <h3>Strengths</h3><p>${filled.strengths}</p>
+        <h3>Skills</h3><p>${filled.skills}</p>
+        <h3>References</h3>
+<p>${filled.references}</p>
+        
+        <h3>Declaration</h3><p>${filled.declaration}</p>
+
+        <h3>Signature</h3><p>${filled.signature}</p>
+
+        </div>
+      </div>
+    </div>
+  `;
+
+// Template4
+} else if (data.template === "template4") {
+  html = `
+    <div class="template4">
+      <div class="header">
+        <div>
+          <h2>${filled.name}</h2>
+          <p>${filled.email} | ${filled.phone}</p>
+        
+      ${renderCommon(filled)}
+    </div>
+  `;
+
+
+
+
+
+
+}
+
+  preview.innerHTML = html;
+}
+
+
+    function addEducation() {
+      const section = document.getElementById("education-section");
+      const div = document.createElement("div");
+      div.classList.add("edu-entry");
+      div.innerHTML = `
+        <input type="text" class="course" placeholder="Course / Degree" required />
+        <input type="text" class="institution" placeholder="Institution / School" required />
+        <input type="text" class="time" placeholder="Time Period (2018 - 2022)" />
+        <input type="text" class="percentage" placeholder="Percentage / CGPA" />
+      `;
+      section.appendChild(div);
+      renderResume(getFormData());
+    }
+
+    // Live updates
+    document.querySelectorAll("input, textarea, select").forEach(el => {
+      el.addEventListener("input", () => renderResume(getFormData()));
+    });
+
+    // Photo field visibility for templates 4 & 5
+    templateSelect.addEventListener("change", (e) => {
+      const val = e.target.value;
+      if ( val === "template5") {
+        photoField.style.display = "block";
+      } else {
+        photoField.style.display = "none";
+      }
+      renderResume(getFormData());
+    });
+
+    // Auto-load Classic (template1) with John Doe sample on startup
+    window.addEventListener("DOMContentLoaded", () => {
+      templateSelect.value = "template1";
+      photoField.style.display = "none";
+      renderResume(getFormData());
+    });
+
+// Validation before saving/downloading
+function isFormValid() {
+  const optionalFields = ["strengths", "references"]; // IDs of optional fields
+  const inputs = document.querySelectorAll("#resumeForm input, #resumeForm textarea, #resumeForm select");
+  let isValid = true;
+
+  for (let el of inputs) {
+    if (el.type !== "file" && !optionalFields.includes(el.id)) {
+      const value = el.value.trim();
+
+      // Empty field check
+      if (value === "") {
+        el.style.border = "2px solid red";
+        isValid = false;
+        continue;
+      } else {
+        el.style.border = "";
+      }
+
+      // Extra validations
+      if (el.id === "email") {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(value)) {
+          alert("⚠️ Please enter a valid email address!");
+          el.style.border = "2px solid red";
+          return false;
+        }
+      }
+
+      if (el.id === "phone") {
+        const phonePattern = /^[0-9]{10}$/; // 10 digit phone number
+        if (!phonePattern.test(value)) {
+          alert("⚠️ Please enter a valid 10-digit phone number!");
+          el.style.border = "2px solid red";
+          return false;
+        }
+      }
+
+      if (el.id === "dob" || el.id === "date") {
+        const datePattern = /^(0[1-9]|[12][0-9]|3[01])[\/](0[1-9]|1[0-2])[\/](\d{4})$/; // DD/MM/YYYY
+        if (!datePattern.test(value)) {
+          alert("⚠️ Please enter date in DD/MM/YYYY format!");
+          el.style.border = "2px solid red";
+          return false;
+        }
+      }
+
+      if (el.id === "age") {
+        if (isNaN(value) || value <= 0 || value > 100) {
+          alert("⚠️ Please enter a valid age!");
+          el.style.border = "2px solid red";
+          return false;
+        }
+      }
+    }
+  }
+
+  if (!isValid) {
+    alert("⚠️ Please fill all required fields with valid information before saving or downloading!");
+  }
+  return isValid;
+}
+
+
+
+// Save resume to localStorage
+function saveResume() {
+  if (!isFormValid()) return;  
+
+  const data = getFormData();
+  const html_snapshot = document.getElementById("preview").innerHTML;
+
+  fetch("http://localhost:4000/resume", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...data, html_snapshot })
+  })
+  .then(res => res.json())
+  .then(response => {
+    alert("✅ Resume saved with ID: " + response.id);
+  })
+  .catch(err => {
+    alert("❌ Failed to save resume!");
+    console.error(err);
+  });
+}
+
+
+
+// Download resume as HTML file
+// Download resume as HTML file (with full styles)
+function downloadResume() {
+  const previewContent = document.getElementById("preview").innerHTML;
+
+  if (!previewContent || previewContent.trim() === "") {
+    alert("⚠️ No resume to download!");
+    return;
+  }
+
+  const name = document.getElementById("name").value || "Resume";
+
+  // Copy ALL styles from the current page
+  const styles = document.querySelector("style").innerHTML;
+
+  const fullHTML = `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>${name}'s Resume</title>
+    <style>${styles}</style>
+  </head>
+  <body>
+    ${previewContent}
+  </body>
+  </html>
+  `;
+
+  const blob = new Blob([fullHTML], { type: "text/html" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `${name.replace(/\s+/g, "_")}_Resume.html`;
+  link.click();
+}
+
+
+
+// Fetch all saved resumes
+function loadResumes() {
+  fetch("http://localhost:4000/resumes")
+    .then(res => res.json())
+    .then(resumes => {
+      const container = document.getElementById("savedResumes");
+      container.innerHTML = "<h3>Saved Resumes</h3>";
+
+      if (resumes.length === 0) {
+        container.innerHTML += "<p>No resumes saved yet.</p>";
+        return;
+      }
+
+      const list = document.createElement("ul");
+      list.style.listStyle = "none";
+      list.style.padding = "0";
+
+      resumes.forEach(r => {
+  const li = document.createElement("li");
+  li.className = "resume-item";
+  li.innerHTML = `
+    <span style="font-weight:bold; color:#2575fc;">${r.slug}</span> 
+    <small style="color:#666;">(Created: ${new Date(r.created_at).toLocaleString()})</small>
+    <br/>
+    <button onclick="openResume(${r.id})" class="btn-open">Open</button>
+    <button onclick="deleteResume(${r.id})" class="btn-delete">Delete</button>
+  `;
+  list.appendChild(li);
+});
+
+
+      container.appendChild(list);
+    })
+    .catch(err => {
+      alert("❌ Failed to load resumes");
+      console.error(err);
+    });
+}
+
+// Open one resume and fill form
+function openResume(id) {
+  fetch("http://localhost:4000/resume/" + id)
+    .then(res => res.json())
+    .then(resume => {
+      let data = resume.data;
+
+      // If resume.data is a string, parse it into object
+      if (typeof data === "string") {
+        try {
+          data = JSON.parse(data);
+        } catch (e) {
+          console.error("❌ Error parsing resume data:", e);
+          alert("Saved resume is corrupted");
+          return;
+        }
+      }
+
+      // ------------------- Place the education fix here -------------------
+      if (data.education && Array.isArray(data.education)) {
+        const section = document.getElementById("education-section");
+        const existingEntries = section.querySelectorAll(".edu-entry");
+
+        // Fill first entry or create one if missing
+        if (existingEntries.length === 0) addEducation(); 
+        existingEntries[0].querySelector(".course").value = data.education[0]?.course || "";
+        existingEntries[0].querySelector(".institution").value = data.education[0]?.institution || "";
+        existingEntries[0].querySelector(".time").value = data.education[0]?.time || "";
+        existingEntries[0].querySelector(".percentage").value = data.education[0]?.percentage || "";
+
+        // Remove extra old entries
+        for (let i = existingEntries.length - 1; i > 0; i--) {
+          existingEntries[i].remove();
+        }
+
+        // Add remaining education entries
+        for (let i = 1; i < data.education.length; i++) {
+          addEducation();
+          const entries = section.querySelectorAll(".edu-entry");
+          const last = entries[entries.length - 1];
+          last.querySelector(".course").value = data.education[i].course || "";
+          last.querySelector(".institution").value = data.education[i].institution || "";
+          last.querySelector(".time").value = data.education[i].time || "";
+          last.querySelector(".percentage").value = data.education[i].percentage || "";
+        }
+      }
+      // -------------------------------------------------------------------
+
+      // Auto-fill the rest of the form fields by ID
+      for (let key in data) {
+        if (key === "education") continue; // skip education, already handled
+        const field = document.getElementById(key);
+        if (field) field.value = data[key];
+      }
+
+      
+
+      // Update template select
+      templateSelect.value = data.template || "template1";
+
+      // Render preview
+      if (resume.html_snapshot) {
+        preview.innerHTML = resume.html_snapshot;
+      } else {
+        renderResume(getFormData());
+      }
+
+      alert("✅ Resume loaded: " + resume.slug);
+    })
+    .catch(err => {
+      alert("❌ Failed to open resume");
+      console.error(err);
+    });
+}
+
+// Delete a resume
+function deleteResume(id) {
+  if (!confirm("Are you sure you want to delete this resume?")) return;
+
+  fetch("http://localhost:4000/resume/" + id, { method: "DELETE" })
+    .then(res => res.json())
+    .then(response => {
+      if (response.deleted) {
+        alert("🗑️ Resume deleted successfully");
+        loadResumes(); // refresh list
+      } else {
+        alert("❌ Failed to delete resume");
+      }
+    })
+    .catch(err => {
+      alert("❌ Error deleting resume");
+      console.error(err);
+    });
+}
+
+
+
+  </script>
+  
+</html>                                                                                                                                        
