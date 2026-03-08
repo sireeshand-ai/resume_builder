@@ -812,6 +812,10 @@ function saveResume() {
 // Download resume as HTML file
 // Download resume as HTML file (with full styles)
 function downloadResume() {
+
+  // Stop download if form is not valid
+  if (!isFormValid()) return;
+
   const previewContent = document.getElementById("preview").innerHTML;
 
   if (!previewContent || previewContent.trim() === "") {
@@ -844,8 +848,6 @@ function downloadResume() {
   link.download = `${name.replace(/\s+/g, "_")}_Resume.html`;
   link.click();
 }
-
-
 
 // Fetch all saved resumes
 function loadResumes() {
